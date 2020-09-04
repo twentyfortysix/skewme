@@ -25,7 +25,7 @@ function init() {
     camera.position.z = cameraDistance;
     scene = new THREE.Scene();
     video = document.getElementById( 'video' );
-    video.src = 'file://' + __dirname + '/../assets/video/lama.mp4';
+    video.src = 'file://' + __dirname + '/../assets/video/file.mp4';
     video.height = videoHeight
     video.width = videoWidth
     video.play()
