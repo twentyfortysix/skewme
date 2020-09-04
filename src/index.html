@@ -5,8 +5,14 @@
     <title>RBG LOOP</title>
     <link type="text/css" rel="stylesheet" href="../assets/css/main.css">
     <script defer src="render.js"></script>
+    <!-- <script defer src="ui.js"></script> -->
   </head>
   <body>
-  	<video defer id="video" src="" muted="muted" loop></video>
+  	<video defer id="video" src="" loop></video>
+  	<div id="menu">
+  		<button id="getFile" class="btn">load video</button>
+  		<button id="fullscreen" class="btn">fullscreen</button>
+  		<div id="currentFrame"></div>
+  	</div>
   </body>
 </html>

@@ -1,28 +1,30 @@
 const {
   app,
   // Menu,
-  BrowserWindow
+  dialog,
+  BrowserWindow,
+  ipcMain
 } = require('electron');
 const path = require('path');
 const fs = require('fs');
-
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
 
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     // frame: false,// disable the native window handlebar
-    alwaysOnTop: true, // make stay always on top
+    // alwaysOnTop: true, // make stay always on top
     width: 1400,
     height: 787,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true
     }
   });
-
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
@@ -32,6 +34,12 @@ const createWindow = () => {
   // var menu = new Menu.buildFromTemplate([{
   //   label : 'Menu',
   //   submenu : [
+  //     {
+  //       label : 'Open file',
+  //       click(){
+  //         openFile()
+  //       }
+  //     },
   //     {
   //       label : 'Quit',
   //       click(){
@@ -68,3 +76,18 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+
+ipcMain.on('open-file-dialog', (event) => {
+  dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [{
+        name: 'videoFile',
+        extensions: ['mp4']
+    }]
+  }).then(result => {
+    console.log('selected file ' + result.filePaths)
+    event.sender.send('selected-file', result.filePaths);
+  }).catch(err => {
+    console.log(err)
+  })
+})
